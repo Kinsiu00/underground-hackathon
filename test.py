@@ -22,7 +22,7 @@ class Action:
     def interaction(self, key):
         print(self.action_dictionary[key])
         if key == self.scene_trigger:
-            print('scene change!')
+            start_scene(scene_list[key])
 
 
 
@@ -37,6 +37,9 @@ times_square = Scene('there is a lot of billboards and people and a single naked
 
 penn_station_actions = Action({'Check MTA Schedule':'late as usual', 'eat a pizza':'yum but pricy', 'mike mike':'mike mike mike', 'go to time\'s square':'off we go!', 'jorge the great':'is gone'}, 'go to time\'s square')
 
+scene_list = {'go to time\'s square': times_square, 'go to penn station': penn_station}
+current_scene = penn_station
+
 def start_scene(element = penn_station):
     print(element.description)
     element.action = inquirer.prompt(element.scene)
@@ -46,11 +49,8 @@ def set_description(element, new_desc):
 
 #GAME START
 while __name__ == '__main__':
-    current_scene = penn_station
     start_scene()
 
     for key in penn_station_actions.action_dictionary:
         if current_scene.action['action'] == key:
             penn_station_actions.interaction(key)
-    if current_scene.action['action'] == 'go to penn station':
-        start_scene(penn_station)
