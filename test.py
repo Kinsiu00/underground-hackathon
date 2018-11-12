@@ -25,16 +25,15 @@ class Action:
         self.scene_trigger = scene_trigger
 
     def interaction(self, key):
-        print(self.action_dictionary[key])
+        print(self.action_dictionary[key], 'I am the key')
 
         for per_scene in self.scene_trigger:
             # print(per_scene, " -- per scene")
             # print(key, " --  key")
             
-        
-            if key == per_scene:
-                print(key)
-                # set_scene(scene_list[key])
+            if key == 'Choose the blue martini':
+                inventory.add('Golden Metrocard')
+                
         print("--------------------------")
 
 # Different Scenes
@@ -72,7 +71,7 @@ dead_rabbit_action = Action({'Bribe the bartender': "Bartender wants you to pay 
                              'Whisper sweet nothings to them': "*Swish Whish Swish Whish*",
                              'Choose the blue martini': "There is a golden metrocard!",
                              'Choose the red martini': "Dude! Your better than this!!!",
-                             'go to times square': "leaving so early?!"}, {'go to times square'})
+                             'go to times square': "leaving so early?!"}, {'Choose the blue martini'})
 
 rabbit_tattoo_action = Action({'talk to the man':'I am busy, come back later', 'get a tattoo':'this isn\'t something you should rush', 'ask about hackathon':'I don\'t know anything about that, we just do tattoos here', 'go to times square': 'you leave'},{'go to times square'})
 
@@ -85,7 +84,7 @@ scene_list = {'go to times square': times_square,
 #GLOBAL
 current_scene = penn_station
 current_action_set = penn_station_actions
-inventory = ['You find:', '$2.37', 'pocket lint']
+inventory = {'pocket lint'}
 
 def set_scene(loadee):
     global current_scene
@@ -100,8 +99,10 @@ def start_scene(element):
 # GAME START
 # set_scene(penn_station)
 while __name__ == '__main__':
+    print('Welcome, placeholder starting message and description for why you are here and stuff\n')
     start_scene(current_scene)
     if current_scene.action['action'] == 'check pocket':
+        print('Inside your pocket, you find:')
         for item in inventory:
             print(item)
     for key in current_action_set.action_dictionary:
@@ -119,7 +120,6 @@ while __name__ == '__main__':
             start_scene(current_scene)
         if current_scene.action['action'] == 'Check MTA Schedule':
             os.system("python3 penn_station_scraper.py")
-            # set_scene(penn_station)
             start_scene(current_scene)
         elif current_scene.action['action'] == key:
             current_action_set.interaction(current_scene.action['action'])
