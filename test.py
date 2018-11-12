@@ -1,4 +1,6 @@
 import inquirer
+import os
+import requests
 
 # SCENE = SELF, DESCRIPTION, MESSAGE, COMMAND_LIST, SCENE (INQ OBJ), ACTION {'action': whatever}
 
@@ -26,11 +28,13 @@ class Action:
         print(self.action_dictionary[key], 'I am the key')
 
         for per_scene in self.scene_trigger:
-            print(per_scene, " -- per scene")
-            print(key, " --  key")
-        
+            # print(per_scene, " -- per scene")
+            # print(key, " --  key")
+            
             if key == 'Choose the blue martini':
                 inventory.add('Golden Metrocard')
+                
+        print("--------------------------")
 
 # Different Scenes
 penn_station = Scene('long ass description and stuff and things and more stuff and things and yes',
@@ -69,7 +73,7 @@ dead_rabbit_action = Action({'Bribe the bartender': "Bartender wants you to pay 
                              'Choose the red martini': "Dude! Your better than this!!!",
                              'go to times square': "leaving so early?!"}, {'Choose the blue martini'})
 
-rabbit_tattoo_action = Action({'talk to the man':'I am busy, come back later', 'get a tattoo':'A tattoo isn\t something you should rush', 'ask about hackathon':'I don\'t know anything about that, we just do tattoos here', 'go to times square': 'you leave'},{'go to times square'})
+rabbit_tattoo_action = Action({'talk to the man':'I am busy, come back later', 'get a tattoo':'this isn\'t something you should rush', 'ask about hackathon':'I don\'t know anything about that, we just do tattoos here', 'go to times square': 'you leave'},{'go to times square'})
 
 scene_loader = {penn_station : penn_station_actions, times_square : times_square_actions, dead_rabbit : dead_rabbit_action, rabbit_tattoo: rabbit_tattoo_action}
 
@@ -113,6 +117,9 @@ while __name__ == '__main__':
             start_scene(current_scene)
         if current_scene.action['action'] == 'go to white rabbit tattoo':
             set_scene(rabbit_tattoo)
+            start_scene(current_scene)
+        if current_scene.action['action'] == 'Check MTA Schedule':
+            os.system("python3 penn_station_scraper.py")
             start_scene(current_scene)
         elif current_scene.action['action'] == key:
             current_action_set.interaction(current_scene.action['action'])
