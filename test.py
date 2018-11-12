@@ -40,12 +40,15 @@ penn_station = Scene('long ass description and stuff and things and more stuff a
 
 times_square = Scene('there is a lot of billboards and people and a single naked cowboy',
                      "where to, adventurer?",
-                     ['tip the cowboy', 'get lost in the crowd', 'check out the lego store', 'find true love', 'go to penn station', 'go to dead rabbit'])
+                     ['tip the cowboy', 'get lost in the crowd', 'check out the lego store', 'find true love', 'go to penn station', 'go to dead rabbit', 'go to white rabbit tattoo'])
 
 dead_rabbit = Scene('Dingy Bar Scene, with crowd of young hipsters',
                     "Loud cosy bar called Dead Rabbit",
                     ['Bribe the bartender', 'Whisper sweet nothings to them', 'Choose the blue martini',
                      'Choose the red martini', 'got to times square'])
+
+rabbit_tattoo = Scene('The tattoo parlor is clean and neat, the walls are adorn with tattoo samples.\n A heavy-set man is busy concentrating on tattoo a face-down customer.', 'you are standing in the White Rabbit Tattoo Shop', ['talk to the man', 'get a tattoo', 'ask about hackathon', 'go to times square'])
+
 
 penn_station_actions = Action({'Check MTA Schedule': 'late as usual',
                                'eat a pizza': 'yum but pricy',
@@ -58,7 +61,8 @@ times_square_actions = Action({'tip the cowboy': 'There you go cowboy',
                                'check out the lego store': 'what a nice toy',
                                'find true love': 'Good luck with that!',
                                'go to penn station': "Now we getting somewhere",
-                               'go to dead rabbit': 'Woah, it\'s dark here'}, {'go to penn station', 'go to dead rabbit'})
+                               'go to dead rabbit': 'Woah, it\'s dark here',
+                               'go to white rabbit tattoo': 'tattoo time'}, {'go to penn station', 'go to dead rabbit', 'go to white rabbit tattoo'})
 
 dead_rabbit_action = Action({'Bribe the bartender': "Bartender wants you to pay their loan",
                              'Whisper sweet nothings to them': "*Swish Whish Swish Whish*",
@@ -66,7 +70,9 @@ dead_rabbit_action = Action({'Bribe the bartender': "Bartender wants you to pay 
                              'Choose the red martini': "Dude! Your better than this!!!",
                              'go to times square': "leaving so early?!"}, {'go to times square'})
 
-scene_loader = {penn_station : penn_station_actions, times_square : times_square_actions, dead_rabbit : dead_rabbit_action}
+rabbit_tattoo_action = Action({'talk to the man':'I am busy, come back later', 'get a tattoo':'this isn\t something you should rush', 'ask about hackathon':'I don\'t know anything about that, we just do tattoos here', 'go to times square': 'you leave'},{'go to times square'})
+
+scene_loader = {penn_station : penn_station_actions, times_square : times_square_actions, dead_rabbit : dead_rabbit_action, rabbit_tattoo: rabbit_tattoo_action}
 
 scene_list = {'go to times square': times_square,
               'go to penn station': penn_station, 'go to dead rabbit': dead_rabbit}
@@ -101,7 +107,8 @@ while __name__ == '__main__':
         if current_scene.action['action'] == 'go to penn station':
             set_scene(penn_station)
             start_scene(current_scene)
+        if current_scene.action['action'] == 'go to white rabbit tattoo':
+            set_scene(rabbit_tattoo)
+            start_scene(current_scene)
         elif current_scene.action['action'] == key:
             current_action_set.interaction(current_scene.action['action'])
-        else:
-            __name__ == '__main__'
