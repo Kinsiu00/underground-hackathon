@@ -33,5 +33,5 @@ for row in info:
 
     info_arr.append((time,destination,departure,track))
 
-for travel in info_arr:
+for travel in info_arr[0:3]:
     print("<::>", travel)
