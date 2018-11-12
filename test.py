@@ -36,7 +36,7 @@ class Action:
 # Different Scenes
 penn_station = Scene('long ass description and stuff and things and more stuff and things and yes',
                      "You are standing in Penn Station",
-                     ['Check MTA Schedule', 'eat a pizza', 'mike mike', 'go to times square', 'jorge the great'])
+                     ['Check MTA Schedule', 'eat a pizza', 'mike mike', 'go to times square', 'check pocket'])
 
 times_square = Scene('there is a lot of billboards and people and a single naked cowboy',
                      "where to, adventurer?",
@@ -45,7 +45,7 @@ times_square = Scene('there is a lot of billboards and people and a single naked
 dead_rabbit = Scene('Dingy Bar Scene, with crowd of young hipsters',
                     "Loud cosy bar called Dead Rabbit",
                     ['Bribe the bartender', 'Whisper sweet nothings to them', 'Choose the blue martini',
-                     'Choose the red martini', 'got to times square'])
+                     'Choose the red martini', 'go to times square'])
 
 rabbit_tattoo = Scene('The tattoo parlor is clean and neat, the walls are adorn with tattoo samples.\n A heavy-set man is busy concentrating on tattoo a face-down customer.', 'you are standing in the White Rabbit Tattoo Shop', ['talk to the man', 'get a tattoo', 'ask about hackathon', 'go to times square'])
 
@@ -54,7 +54,7 @@ penn_station_actions = Action({'Check MTA Schedule': 'late as usual',
                                'eat a pizza': 'yum but pricy',
                                'mike mike': 'mike mike mike',
                                'go to times square': 'off we go!',
-                               'jorge the great': 'is gone'}, {'go to times square'})
+                               'check pocket': '..nothing else'}, {'go to times square'})
 
 times_square_actions = Action({'tip the cowboy': 'There you go cowboy',
                                'get lost in the crowd': 'Oh Oh Trouble',
@@ -81,7 +81,7 @@ scene_list = {'go to times square': times_square,
 #GLOBAL
 current_scene = penn_station
 current_action_set = penn_station_actions
-
+inventory = ['You find:', '$2.37', 'pocket lint']
 
 def set_scene(loadee):
     global current_scene
@@ -97,6 +97,9 @@ def start_scene(element):
 # set_scene(penn_station)
 while __name__ == '__main__':
     start_scene(current_scene)
+    if current_scene.action['action'] == 'check pocket':
+        for item in inventory:
+            print(item)
     for key in current_action_set.action_dictionary:
         if current_scene.action['action'] == 'go to times square':
             set_scene(times_square)
