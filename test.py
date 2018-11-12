@@ -29,13 +29,14 @@ class Action:
             print(per_scene, " -- per scene")
             print(key, " --  key")
         
-        if key == per_scene:
-            start_scene(scene_list[key])
+            if key == per_scene:
+                print(key)
+                # set_scene(scene_list[key])
 
 # Different Scenes
 penn_station = Scene('long ass description and stuff and things and more stuff and things and yes',
                      "You are standing in Penn Station",
-                     ['Check MTA Schedule', 'eat a pizza', 'mike mike', 'go to time\'s square', 'jorge the great'])
+                     ['Check MTA Schedule', 'eat a pizza', 'mike mike', 'go to times square', 'jorge the great'])
 
 times_square = Scene('there is a lot of billboards and people and a single naked cowboy',
                      "where to, adventurer?",
@@ -44,13 +45,13 @@ times_square = Scene('there is a lot of billboards and people and a single naked
 dead_rabbit = Scene('Dingy Bar Scene, with crowd of young hipsters',
                     "Loud cosy bar called Dead Rabbit",
                     ['Bribe the bartender', 'Whisper sweet nothings to them', 'Choose the blue martini',
-                     'Choose the red martini', 'got to time\'s square'])
+                     'Choose the red martini', 'got to times square'])
 
 penn_station_actions = Action({'Check MTA Schedule': 'late as usual',
                                'eat a pizza': 'yum but pricy',
                                'mike mike': 'mike mike mike',
-                               'go to time\'s square': 'off we go!',
-                               'jorge the great': 'is gone'}, {'go to time\'s square'})
+                               'go to times square': 'off we go!',
+                               'jorge the great': 'is gone'}, {'go to times square'})
 
 times_square_actions = Action({'tip the cowboy': 'There you go cowboy',
                                'get lost in the crowd': 'Oh Oh Trouble',
@@ -63,27 +64,39 @@ dead_rabbit_action = Action({'Bribe the bartender': "Bartender wants you to pay 
                              'Whisper sweet nothings to them': "*Swish Whish Swish Whish*",
                              'Choose the blue martini': "There is a golden metrocard!",
                              'Choose the red martini': "Dude! Your better than this!!!",
-                             'got to time\'s square': "leaving so early?!"}, {'go to time\'s square'})
+                             'got to times square': "leaving so early?!"}, {'go to times square'})
 
+scene_loader = {penn_station : penn_station_actions, times_square : times_square_actions, dead_rabbit : dead_rabbit_action}
 
-scene_list = {'go to time\'s square': times_square,
+scene_list = {'go to times square': times_square,
               'go to penn station': penn_station, 'go to dead rabbit': dead_rabbit}
+
+
+#GLOBAL
 current_scene = penn_station
+current_action_set = penn_station_actions
 
 
-def start_scene(element=penn_station):
-    print(element.description)
-    element.action = inquirer.prompt(element.scene)
+def set_scene(loadee):
+    global current_scene
+    current_scene = loadee
+    global current_action_set
+    current_action_set = scene_loader[loadee]
 
-
-def set_description(element, new_desc):
-    element.description = new_desc
-
+def start_scene(element):
+    print(current_scene.description)
+    current_scene.action = inquirer.prompt(current_scene.scene)
 
 # GAME START
+# set_scene(penn_station)
 while __name__ == '__main__':
-    start_scene()
-
-    for key in penn_station_actions.action_dictionary:
-        if current_scene.action['action'] == key:
-            penn_station_actions.interaction(key)
+    start_scene(current_scene)
+    for key in current_action_set.action_dictionary:
+        if current_scene.action['action'] == 'mike mike':
+            set_scene(times_square)
+            start_scene(current_scene)
+        if current_scene.action['action'] == 'go to dead rabbit':
+            set_scene(dead_rabbit)
+            start_scene(current_scene)
+        elif current_scene.action['action'] == key:
+            current_action_set.interaction(current_scene.action['action'])
