@@ -64,7 +64,7 @@ dead_rabbit_action = Action({'Bribe the bartender': "Bartender wants you to pay 
                              'Whisper sweet nothings to them': "*Swish Whish Swish Whish*",
                              'Choose the blue martini': "There is a golden metrocard!",
                              'Choose the red martini': "Dude! Your better than this!!!",
-                             'got to times square': "leaving so early?!"}, {'go to times square'})
+                             'go to times square': "leaving so early?!"}, {'go to times square'})
 
 scene_loader = {penn_station : penn_station_actions, times_square : times_square_actions, dead_rabbit : dead_rabbit_action}
 
@@ -92,11 +92,16 @@ def start_scene(element):
 while __name__ == '__main__':
     start_scene(current_scene)
     for key in current_action_set.action_dictionary:
-        if current_scene.action['action'] == 'mike mike':
+        if current_scene.action['action'] == 'go to times square':
             set_scene(times_square)
             start_scene(current_scene)
         if current_scene.action['action'] == 'go to dead rabbit':
             set_scene(dead_rabbit)
             start_scene(current_scene)
+        if current_scene.action['action'] == 'go to penn station':
+            set_scene(penn_station)
+            start_scene(current_scene)
         elif current_scene.action['action'] == key:
             current_action_set.interaction(current_scene.action['action'])
+        else:
+            __name__ == '__main__'
