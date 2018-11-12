@@ -23,19 +23,32 @@ class Action:
         self.scene_trigger = scene_trigger
 
     def interaction(self, key):
-        print(self.action_dictionary[key], 'I am the key')
+        print(self.action_dictionary[key])
 
         for per_scene in self.scene_trigger:
-            print(per_scene, " -- per scene")
+            print(per_scene, " -- is what I'm listening for")
             print(key, " --  key")
-        
             if key == 'Choose the blue martini':
                 inventory.add('Golden Metrocard')
+                dead_rabbit.command_list.remove(key)
+            if key == 'Choose the red martini':
+                dead_rabbit.command_list.remove(key)
+            if key == 'take a ride on the wild side':
+                questions = [
+                inquirer.Text('answer', message="where are you trying to go?")
+                ]
+                answer = inquirer.prompt(questions)
+                if answer['answer'] != 'dead rabbit':
+                    print('where is that?')
+                else:
+                    print('off we go then')
+                    set_scene(dead_rabbit)
+                    # start_scene(dead_rabbit)
 
 # Different Scenes
 penn_station = Scene('long ass description and stuff and things and more stuff and things and yes',
                      "You are standing in Penn Station",
-                     ['Check MTA Schedule', 'eat a pizza', 'mike mike', 'go to times square', 'check pocket'])
+                     ['Check MTA Schedule', 'eat a pizza', 'mike mike', 'go to times square', 'check pocket', 'take a ride on the wild side'])
 
 times_square = Scene('there is a lot of billboards and people and a single naked cowboy',
                      "where to, adventurer?",
@@ -53,7 +66,8 @@ penn_station_actions = Action({'Check MTA Schedule': 'late as usual',
                                'eat a pizza': 'yum but pricy',
                                'mike mike': 'mike mike mike',
                                'go to times square': 'off we go!',
-                               'check pocket': '..nothing else'}, {'go to times square'})
+                               'take a ride on the wild side':'puff the magic dragon',
+                               'check pocket': '..nothing else'}, {'go to times square', 'puff the magic dragon'})
 
 times_square_actions = Action({'tip the cowboy': 'There you go cowboy',
                                'get lost in the crowd': 'Oh Oh Trouble',
@@ -114,5 +128,5 @@ while __name__ == '__main__':
         if current_scene.action['action'] == 'go to white rabbit tattoo':
             set_scene(rabbit_tattoo)
             start_scene(current_scene)
-        elif current_scene.action['action'] == key:
+        if current_scene.action['action'] == key:
             current_action_set.interaction(current_scene.action['action'])
