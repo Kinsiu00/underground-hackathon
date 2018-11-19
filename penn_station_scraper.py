@@ -15,7 +15,9 @@ headers = []
 for columns_titles in table_header:
     headers.append((columns_titles.text))
 
+
 print("<:>", headers)
+print("----------------------------------------------------")
 
 # -------information about each train trip from Penn Station-------
 
@@ -33,5 +35,9 @@ for row in info:
 
     info_arr.append((time,destination,departure,track))
 
-for travel in info_arr[0:3]:
-    print("<::>", travel)
+for travel in info_arr[0:4]:
+    print("<:>", travel)
+
+
+print("----------------------------------------------------")
+print('\n')
