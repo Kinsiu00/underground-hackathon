@@ -33,11 +33,9 @@ class Action:
             # print(key, " --  key")
             if key == 'Look for the White Rabbit':
                 times_square.command_list.add('Enter White Rabbit Intimates')
-                times_square.command_list.add(
-                    'Go to the White Rabbit Tattoo Parlor')
+                times_square.command_list.add('Go to the White Rabbit Tattoo Parlor')
 
             if key == 'Order the Blue cocktail':
-                
                 inventory.add('Golden Metrocard')
                 dead_rabbit.command_list.remove(key)
             if key == 'Order the Red cocktail':
